@@ -20,11 +20,12 @@ import SearchIcon from '@mui/icons-material/Search';
 import InputBase from '@mui/material/InputBase';
 import LongMenu from './DropDown';
 import FilterMenu from './SearchFilter';
+import { JwtContext } from '../JwtContext';
 
 
-const pages = ['Mood Tracker', 'Top Geners', 'Watch List' ];
-const settings = ['Profile', 'Account', 'Logout'];
-
+const pages = [{ Name: 'Mood Tracker', Link: "/moodtracker" }, { Name: 'Top Geners', Link: "/topgeners" }, { Name : 'Watch List', Link:"/watch-list"} ];
+const settings1 = [{ Name: 'Profile', Link: "/profile" }, { Name: 'Account', Link: "/account" }, {Name:'Logout', Link: '/logout'}];
+const settings2 = [{ Name: 'Login', Link: "/login" }, { Name: 'Signup', Link: "/signup" }, {Name:'Profile', Link: '/profile'}];
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
   borderRadius: theme.shape.borderRadius,
@@ -70,6 +71,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 
 function Nav() {
+  
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -88,6 +90,16 @@ function Nav() {
     setAnchorElUser(null);
   };
 
+  var settings;
+  const { jwt, setJwt } = React.useContext(JwtContext)
+  console.log("jwt for nav : ", jwt)
+  
+  if(jwt == null ){
+    settings = settings2;
+  } else {
+    settings = settings1;
+  }
+  console.log(settings)
   return (
     <AppBar className='bg-black' sx={{backgroundColor:'black'}} position="sticky">
       <Container maxWidth="xl">
@@ -131,9 +143,9 @@ function Nav() {
               }}
             >
               {pages.map((page) => (
-                  <MenuItem sx={{ color: '#BD6513' , 'outlineStyle':'solid' , 'outlineColor':'#BD6513'}} className='text-amber-700 bg-black !important' key={page} onClick={handleCloseNavMenu}>
-                      <a href='/'>
-                          <Typography textAlign="center">{page}</Typography>
+                  <MenuItem sx={{ color: '#BD6513' , 'outlineStyle':'solid' , 'outlineColor':'#BD6513'}} className='text-amber-700 bg-black !important' key={page.name} onClick={handleCloseNavMenu}>
+                      <a href={page.Link}>
+                          <Typography textAlign="center">{page.Name}</Typography>
                           </a>
                 </MenuItem>
               ))}
@@ -151,7 +163,7 @@ function Nav() {
               </IconButton>
             </Tooltip>
             <Menu
-              sx={{ mt: '45px' }}
+              sx={{ mt: '45px' , borderRadius:'2ch', }}
               id="menu-appbar"
               anchorEl={anchorElUser}
               anchorOrigin={{
@@ -165,8 +177,9 @@ function Nav() {
                     }}
                      PaperProps={{
           style: {
-            borderRadius:'2ch',
+            
                          backgroundColor: 'black',
+                         backdropFilter:'none',
                          textDecorationColor: 'white',
              color:'#bd6513',
           },
@@ -176,7 +189,9 @@ function Nav() {
             >
               {settings.map((setting) => (
                 <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
+                  <a href={setting.Link}>
+                    <Typography textAlign="center">{setting.Name}</Typography>
+                    </a>
                 </MenuItem>
               ))}
                       </Menu>
@@ -227,9 +242,9 @@ function Nav() {
          
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }} className= 'justify-end pr-28'>
             {pages.map((page) => (
-                <a className='text-amber-700 px-6 border-b-amber-700 !important' href='/'>
+                <a href={page.Link} className='text-amber-700 px-6 border-b-amber-700 !important'>
                 <Button sx={{color:'#BD6513' , outlineStyle:'solid' , outlineColor:'#BD6513'}} className='text-amber-700 !important'>
-                {page}
+                {page.Name}
                 </Button>
                 </a>
             ))}
@@ -277,9 +292,13 @@ function Nav() {
                 onClose={handleCloseUserMenu}
               >
                 {settings.map((setting) => (
+                  
                   <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                    <Typography textAlign="center">{setting}</Typography>
-                  </MenuItem>
+                       <a href={setting.Link}>
+                      <Typography textAlign="center">{setting.Name}</Typography>
+                    </a>
+                    </MenuItem>
+                    
                 ))}
               </Menu>
                       
