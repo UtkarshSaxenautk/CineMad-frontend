@@ -2,11 +2,12 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
+import { validate } from 'react-email-validator';
 import { Cookies } from "react-cookie";
 import './Login.css'
 import { Link } from "@mui/material";
 import SignUp from "./Signup";
-import { JwtContext } from "../JwtContext";
+import { JwtContext, UserProfileContext } from "../JwtContext";
 import { useNavigate } from "react-router-dom";
 import Nav from "./Nav";
 
@@ -16,7 +17,8 @@ import Nav from "./Nav";
 
 const SignIn = () => {
   const navigate = useNavigate();
-    const { jwt, setJwt } = useContext(JwtContext);
+  const { jwt, setJwt } = useContext(JwtContext);
+  const {userProfile , setUserProfile} = useContext(UserProfileContext)
   const [formData, setFormData] = useState({
     email: "",
     password: ""
@@ -33,8 +35,15 @@ const SignIn = () => {
   };
 
   const handleSubmit = async (e) => {
+    
     e.preventDefault();
-      const data = {
+    if (!validate(email) ){
+       alert("invalid email")
+    }
+    if (password.length <= 5) {
+      alert("password must be more than 5 characters")
+    }
+    const data = {
           "email": email,
           "passwordHash": password
       }
@@ -50,17 +59,17 @@ const SignIn = () => {
       // Store JWT in cookie
         const expirationTime = new Date(); // Set your desired expiration time here
 expirationTime.setMinutes(expirationTime.getMinutes + 2400); // Example: expires in 30 minutes
-
+      
 // Set the cookie with the expiration time
       cookies.set("jwt", response.data, { path: "/", expires: expirationTime });
-        console.log(jwt, " set");
-
       console.log("Sign-in successful", response);
       navigate('/')
       
       // Handle successful sign-in response here
     } catch (error) {
       console.log(error); // Handle sign-in error response here
+      alert("invalid email or password")
+      return 
     }
   };
 

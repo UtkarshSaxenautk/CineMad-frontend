@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import './Login.css'
 import { Link, useNavigate } from "react-router-dom";
+import {validate} from 'react-email-validator'
 import SignIn from "./Login";
 import Nav from "./Nav";
 
@@ -29,6 +30,14 @@ const SignUp = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!validate(email)) {
+      alert("Email is not valid");
+      return 
+    } 
+    if (password.length <= 5) {
+      alert("password must be of length greater than 5")
+      return 
+    }
       const data = {
         "email" : email,
     "username":username,

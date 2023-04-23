@@ -20,7 +20,8 @@ import SearchIcon from '@mui/icons-material/Search';
 import InputBase from '@mui/material/InputBase';
 import LongMenu from './DropDown';
 import FilterMenu from './SearchFilter';
-import { JwtContext } from '../JwtContext';
+import { JwtContext, SearchContext } from '../JwtContext';
+import { useContext } from 'react';
 
 
 const pages = [{ Name: 'Mood Tracker', Link: "/moodtracker" }, { Name: 'Top Geners', Link: "/topgeners" }, { Name : 'Watch List', Link:"/watch-list"} ];
@@ -71,9 +72,14 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 
 function Nav() {
-  
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const {search , setSearch} = useContext(SearchContext)
+
+  const changeTheSearch = (event) => {
+    console.log(event.target.value , " is value");
+    setSearch(event.target.value);
+  }
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -89,6 +95,21 @@ function Nav() {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+
+  React.useEffect(
+    () => {
+      //setMovies([]);
+      // console.log("Hello");
+      if (search === "") {
+        //getAllMovies();
+        console.log("lol empty")
+      } else {
+        //getSearchedMovies();
+        console.log("searched : " , search)
+      }
+    },
+    [search]
+  )
 
   var settings;
   const { jwt, setJwt } = React.useContext(JwtContext)
@@ -209,11 +230,13 @@ function Nav() {
                           <SearchIconWrapper>
               <SearchIcon />
             </SearchIconWrapper>
-            <StyledInputBase
+                      <StyledInputBase
+                        value={search}
+                        onChange={changeTheSearch}
               placeholder="Search…"
               inputProps={{ 'aria-label': 'search' }}
             />
-                      </Search>
+            </Search>
             </div>                     
              <FilterMenu /> </></MenuItem>
             </Menu>
@@ -231,7 +254,9 @@ function Nav() {
                           <SearchIconWrapper>
               <SearchIcon />
             </SearchIconWrapper>
-            <StyledInputBase
+                  <StyledInputBase
+                    value={search}
+                        onChange={changeTheSearch}
               placeholder="Search…"
               inputProps={{ 'aria-label': 'search' }}
             />

@@ -2,13 +2,15 @@ import * as React from 'react';
 import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
+import { Button } from '@mui/material';
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
+import { SearchContext, TypeContext } from '../JwtContext';
 
 const options = [
   'Movie',
-  'Show',
+  'TV',
   'Actor',
-  'Other'
+  'Everything'
 ];
 
 const ITEM_HEIGHT = 48;
@@ -22,10 +24,15 @@ export default function FilterMenu() {
   const handleClose = () => {
     setAnchorEl(null);
   };
+  const {type, setType} = React.useContext(TypeContext)
+  // const handleSelectFilter = (option) => {
+    
+  // }
 
   return (
+    
     <div className='text-amber-700 row-auto pb-2'>
-      
+      {type}
       <IconButton 
         aria-label="more"
         id="long-button"
@@ -59,9 +66,18 @@ export default function FilterMenu() {
         }}
       >
         {options.map((option) => (
-          <MenuItem className='text-white !important' sx={{color:'#BD6513'}} key={option} selected={option === 'Pyxis'} onClick={handleClose}>
+         
+          <MenuItem className='text-white !important' sx={{ color: '#BD6513' }} key={option} onClick={() => {
+            console.log(type)
+            option = option.toLowerCase()
+            setType(option)
+            console.log(type)
+            handleClose()
+          }
+          }>
             {option}
-          </MenuItem>
+            </MenuItem>
+           
         ))}
       </Menu>
     </div>

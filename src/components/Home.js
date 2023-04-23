@@ -4,6 +4,7 @@ import React, { useContext , useEffect } from 'react'
 import Nav from './Nav';
 import Foot from './Foot';
 import { JwtContext } from '../JwtContext';
+import Movie from './MovieView';
 
 
 
@@ -35,9 +36,12 @@ const Home = () => {
     <>
       {/* <Navigation /> */}
      
-     <Nav />
-      
-      <Foot/>
+      <Nav />
+      <div className='bg-gray-700'>
+        <Movie />
+         <Foot/>
+        </div>
+     
       {/* <Footer /> */}
      
      
