@@ -2,7 +2,6 @@ import * as React from 'react';
 import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import { Button } from '@mui/material';
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import { SearchContext, TypeContext } from '../JwtContext';
 

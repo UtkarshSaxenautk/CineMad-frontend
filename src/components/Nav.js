@@ -114,7 +114,6 @@ function Nav() {
   var settings;
   const { jwt, setJwt } = React.useContext(JwtContext)
   console.log("jwt for nav : ", jwt)
-  
   if(jwt == null ){
     settings = settings2;
   } else {

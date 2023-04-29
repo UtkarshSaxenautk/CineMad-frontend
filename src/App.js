@@ -1,3 +1,4 @@
+/* eslint-disable import/no-unresolved */
 import { render } from "react-dom";
 import './style.css'
 import { StrictMode, useState } from "react";
@@ -6,13 +7,10 @@ import Home from "./components/Home";
 import SignIn from "./components/Login";
 import SignUp from "./components/Signup";
 import { JwtContext, SearchContext, TypeContext, UserProfileContext } from "./JwtContext";
-import Nav from "./components/Nav";
 import Logout from "./components/Logout";
-import { Profiler } from "react";
 import ProfilePage from "./components/Profile";
-
-
-
+import MoodForm from "./components/Main";
+import WatchList from "./components/WatchList";
 
 const App = () => {
   const [jwt, setJwt] = useState('');
@@ -28,12 +26,13 @@ const App = () => {
             <TypeContext.Provider value={{ type, setType }}>
               <UserProfileContext.Provider value={{userProfile , setUserProfile}}>
           <Routes>
-            {/* <Route path="/details/:id" element={<Details />} /> */}
             <Route path="/" element={<Home />} />
           <Route path="/login" element={<SignIn />} />
             <Route path="/signup" element={<SignUp />} />
                 <Route path="/logout" element={<Logout />} />
-                <Route path="/profile" element={<ProfilePage />}/>
+                  <Route path="/profile" element={<ProfilePage />} />
+                  <Route path="/moodtracker" element={<MoodForm />} />
+                  <Route path="/watch-list" element={<WatchList />} />
                 </Routes> 
                 </UserProfileContext.Provider>
               </TypeContext.Provider>
