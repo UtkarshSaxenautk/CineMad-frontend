@@ -83,7 +83,7 @@ const ProfilePage = () => {
                     <h3 className="text-xl font-semibold mb-2 text-right">Current Mood</h3>
                     {/* Display current mood from user data */}
                     <p  className="text-right text-gray-600">
-                      {userProfile.MoodPreviously}
+                      {userProfile.MoodPreviously[0]}
                     </p>
                                                 </div>
                                                 
@@ -97,7 +97,8 @@ const ProfilePage = () => {
                                         </div>
                                          <h2 className="text-center text-3xl mb-14">Movies Watched</h2>
                                    <main className="grid">
-                                   
+                        {userProfile.MoviesWatchedInformation === null ? <>
+                        </>:<>
   
                                   {userProfile.MoviesWatchedInformation.map((movie) => (
                                        <article key={movie.ID}>
@@ -109,7 +110,7 @@ const ProfilePage = () => {
       </div>
     </article>
                                      
-                                  ))}
+                                  ))}</>}
                                       </main>
             </>
           )}

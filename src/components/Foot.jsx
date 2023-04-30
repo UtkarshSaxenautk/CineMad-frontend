@@ -2,7 +2,7 @@ import './Foot.css'
 import logo from '../images/LOGO.png'
 const Foot = () => {
     return (
-    <footer className="pt-6 footer-sec inline-block  align-text-bottom ... !important">
+    <footer className="mt-24 footer-sec inline-block  align-text-bottom  ... !important">
     <div className="main">
       
       

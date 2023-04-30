@@ -5,11 +5,12 @@ import MovieIcon from '@mui/icons-material/Movie';
 import { JwtContext } from '../JwtContext';
 import axios from 'axios';
 
-export default function Result(props) {
+export default function ResultOne(props) {
+    console.log(props)
     const boxes = props.movies.map(
         (item, index) => {
            // console.log("id: "  , item.id)
-            return <Box key={index} image={item.poster_path} title={item.original_title} rating={item.vote_average} id={item.id} />
+            return <Box key={index} image={item.ImageUrl} title={item.Name} url = {item.Url} id={item.ID} />
         }
     )
     return (
@@ -22,14 +23,14 @@ export default function Result(props) {
 
 const Box = (props) => {
     const {jwt , setJwt} = useContext(JwtContext)
-    const IMGPATH = "https://image.tmdb.org/t/p/w1280";
+    //const IMGPATH = "https://image.tmdb.org/t/p/w1280";
 
     const onWatchLater = async(movieId) => {
         console.log("onWatchLater: ", movieId)
          const data = {
-        "id" : movieId+"",
+        "id" : movieId,
          "jwt":jwt,
-        "isMovieDB":true,
+        "isMovieDB":false,
         "type":"movie",
    
         }
@@ -46,7 +47,7 @@ const Box = (props) => {
         const data = {
         
          "jwt":jwt,
-        "movie":movieId+"",
+        "movie":movieId,
        
    
         }
@@ -60,10 +61,10 @@ const Box = (props) => {
     }
     return (
         <div className='shadow min-h-[200px] mt-3 pb-1'>
-            <img src={IMGPATH + props.image} alt="" className='w-full' />
+            <img src={props.image} alt={props.title} className='w-full' crossOrigin="anonymous" referrerPolicy="no-referrer" />
             <div className='flex justify-between  px-2 items-center text-white'>
-                <span className='text-xl'>{props.title}</span>
-                <span className='text-xl text-yellow-500 font-bold'>{props.rating}</span>
+                <span className='text-xl'>{props.title}</span>s
+                {/* <span className='text-xl text-yellow-500 font-bold'>{props.rating}</span> */}
                 
             </div>
             <div className='flex justify-between  px-2 items-center mt-4 text-slate-300'>

@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { TextField, Button } from "@mui/material";
-import image from '../images/404.png'
-import { useContext } from "react";
-import { JwtContext } from "../JwtContext";
+import image from "../images/404.png";
 import axios from "axios";
-import { useEffect } from "react";
+import { CurrentMoods, JwtContext } from "../JwtContext";
+import Nav from "./Nav";
+import { useNavigate } from 'react-router-dom'
 
 function getCookie(name) {
   const cookieString = decodeURIComponent(document.cookie);
@@ -19,13 +19,15 @@ function getCookie(name) {
 }
 
 function MoodForm() {
-  const {jwt , setJwt} = useContext(JwtContext)
-  const [formData, setFormData] = React.useState({
+  const navigate = useNavigate()
+  const { currentMoods, setCurrentMoods } = useContext(CurrentMoods);
+  const { jwt, setJwt } = useContext(JwtContext);
+  const [userMoods, setUserMoods] = useState([]);
+  const [formData, setFormData] = useState({
     currentMood: "",
     favoriteActors: "",
   });
-
-  const [formVisible, setFormVisible] = React.useState(false);
+  const [formVisible, setFormVisible] = useState(false);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -39,37 +41,53 @@ function MoodForm() {
     const regex = /(happy|sad|depressed|cheerful|good|thrilling|adventurous|nostlagic|bad|anxious|stressed|overwhelmed|fear|suprise|disgust)/gi;
     const res = moods.match(regex);
     return res;
-  }
+  };
 
   useEffect(() => {
     if (jwt === "" || jwt === null) {
       const temp = getCookie("jwt");
       setJwt(temp);
     }
-  },[])
+  }, []);
 
-  const handleFormSubmit = async(event) => {
+
+
+  useEffect(() => {
+    console.log("userMoods updated:", userMoods);
+    setCurrentMoods(userMoods);
+      console.log("currentMoods", currentMoods);
+  }, [userMoods]);
+  
+
+  const handleFormSubmit = async (event) => {
     event.preventDefault();
     console.log(formData);
-    const moods = extractMoods(formData.currentMood.toLowerCase())
-    console.log(moods)
-    const tempJwt = getCookie("jwt");
+    let moods = extractMoods(formData.currentMood.toLowerCase());
+    setUserMoods(moods);
+    setCurrentMoods(moods)
+    console.log("currentMoods", currentMoods);
     
+    const tempJwt = getCookie("jwt");
+
     if (jwt === "" || jwt == null) {
       setJwt(tempJwt);
     }
+
     console.log(jwt);
     const data = {
-          "jwt": jwt,
-          "mood": moods
-      }
-      //console.log(jwt, " initially ");
+      jwt: jwt,
+      mood: moods,
+    };
     try {
-       const response = await axios.post("http://localhost:50081/user/getMovieAccMood", data);
-        console.log(response.data); 
+      const response = await axios.post(
+        "http://localhost:50081/user/getMovieAccMood",
+        data
+      );
+      console.log(response.data);
+      navigate('/');
     } catch (error) {
-      console.log(error); 
-      return 
+      console.log(error);
+      return;
     }
   };
 
@@ -79,6 +97,12 @@ function MoodForm() {
 
   const renderForm = () => {
     return (
+      <>
+        <div className="aling-top">
+          <Nav />
+          </div>
+        <div>
+          <br/>
       <form onSubmit={handleFormSubmit}>
         <div className="mb-4">
           <TextField
@@ -103,7 +127,9 @@ function MoodForm() {
         <Button variant="contained" color="primary" type="submit">
           Submit
         </Button>
-      </form>
+          </form>
+          </div>
+        </>
     );
   };
 
@@ -115,9 +141,7 @@ function MoodForm() {
         backgroundPosition: "center",
         minHeight: "100vh",
         padding: "50px 0",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
+        
       }}
     >
       {formVisible ? (

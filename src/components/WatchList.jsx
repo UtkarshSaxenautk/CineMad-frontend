@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { List, ListItem, ListItemText, ListItemSecondaryAction, IconButton, ListItemAvatar, Avatar, CircularProgress } from '@mui/material';
+import { List, ListItem, ListItemText, ListItemSecondaryAction, IconButton, ListItemAvatar, Avatar, CircularProgress, Button } from '@mui/material';
 import { Delete } from '@mui/icons-material';
 import axios from 'axios';
 import { useContext } from 'react';
@@ -51,7 +51,7 @@ const WatchList = ({ movies, onRemoveMovie }) => {
     setSelectedMovie(movie);
   };
 
-  const handleRemoveMovie = async (movie) => {
+  const handleRemoveMovie = async(movie) =>  {
     const body = {
       "jwt" : jwt,
       "movie_id": movie.ID,
@@ -70,6 +70,11 @@ const WatchList = ({ movies, onRemoveMovie }) => {
     return <CircularProgress />;
   }
 
+  const removeSpace = (s) => {
+    const url = "https://www.google.com/search?q="+s;
+    return url
+  }
+
   return (
     <>
       <Nav />
@@ -79,28 +84,29 @@ const WatchList = ({ movies, onRemoveMovie }) => {
       <h2 className="text-xl text-center font-bold mt-3 mb-6">Watch List</h2>
       <List className="content-center w-full max-w-xs bg-white rounded-lg shadow-lg overflow-hidden divide-y divide-gray-200">
         {movieData.map((movie) => (
-          <ListItem button key={movie.ID} onClick={() => handleMovieClick(movie)}>
+          <ListItem button key={movie.ID}>
             <ListItemAvatar>
               <Avatar className="w-12 h-12" alt={movie.Name} src={`${movie.ImageUrl}`} />
             </ListItemAvatar>
             <ListItemText primary={movie.Name} secondary={movie.release_date} />
+            <a href={removeSpace(movie.Name)}><Button>Watch</Button></a>
             <ListItemSecondaryAction>
-              <IconButton onClick={() => onRemoveMovie(movie)}>
+              <IconButton onClick={() => handleRemoveMovie(movie)}>
                 <Delete />
               </IconButton>
             </ListItemSecondaryAction>
           </ListItem>
         ))}
       </List>
-      {selectedMovie && (
+      {/* {selectedMovie && (
         <div>
           <p className="mt-4">Selected Movie: {selectedMovie.title}</p>
-          <button className="mt-2 px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600" onClick={handleMovieRemove}>Remove</button>
+          <button className="mt-2 px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600" onClick={handleRemoveMovie()}>Remove</button>
           <div className="mt-4">
             <img className="w-64 h-64 object-cover rounded-lg" src={`https://image.tmdb.org/t/p/w500${selectedMovie.poster_path}`} alt={selectedMovie.title} />
           </div>
         </div>
-      )}
+      )} */}
       </div>
       </div>
       </>
