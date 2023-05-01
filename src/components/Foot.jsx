@@ -26,7 +26,7 @@ const Foot = () => {
           <h3>Movies</h3>
         </div>
         <div className="office-des">
-          <p>here are <br/> many movies<br/>of Lorem Ipsum<br/>available</p>
+          <p>here are <br/> many movies<br/>of Your choice available<br/>available</p>
           
          <a href="#">cinemad@gmail.com</a>
           
@@ -74,7 +74,7 @@ const Foot = () => {
     </div>
     <div className="copyright">
     
-    <p>© Copyright 2023 HuiHUi.</p>
+    <p>© Copyright 2023 utk.</p>
     </div>
   </footer>
   )

@@ -61,7 +61,7 @@ const Box = (props) => {
     }
     return (
         <div className='shadow min-h-[200px] mt-3 pb-1'>
-            <img src={props.image} alt={props.title} className='w-full' crossOrigin="anonymous" referrerPolicy="no-referrer" />
+            <img src={props.image} alt={props.title} className='w-full'/>
             <div className='flex justify-between  px-2 items-center text-white'>
                 <span className='text-xl'>{props.title}</span>s
                 {/* <span className='text-xl text-yellow-500 font-bold'>{props.rating}</span> */}

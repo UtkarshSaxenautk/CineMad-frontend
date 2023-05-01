@@ -3,6 +3,7 @@ import { JwtContext, UserProfileContext } from "../JwtContext";
 import axios from "axios";
 import "./Profile.css";
 import Nav from './Nav'
+import SessionExpired from "./SessionExpired";
 
 
 function getCookie(name) {
@@ -62,13 +63,14 @@ const ProfilePage = () => {
         <div>Loading...</div>
       ) : (
         <div className="bg-gray-400 min-h-screen py-8 px-4 sm:px-8 lg:px-16 xl:px-32">
-          <h1 className="text-4xl text-center font-bold mb-8 text-neutral-900">Profile Page</h1>
+          <h1 className="text-4xl text-center font-bold mb-2 text-neutral-900">Profile Page</h1>
           {jwt === "" || jwt == null ? (
-            <div className="pt-16 justify-center text-center ">
-              <a className="text-center bg-slate-500 text-4xl rounded-lg border-x-4 border-black border-y-4" href="/login">
-                <button >Login First</button>
-              </a>
-            </div>
+            // <div className="pt-16 justify-center text-center ">
+            //   <a className="text-center bg-slate-500 text-4xl rounded-lg border-x-4 border-black border-y-4" href="/login">
+            //     <button >Login First</button>
+            //   </a>
+            // </div>
+           <SessionExpired />
           ) : (
             <>
               <div className="bg-black text-white rounded-3xl shadow-lg p-8 mb-8">

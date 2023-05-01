@@ -5,6 +5,7 @@ import axios from 'axios';
 import { useContext } from 'react';
 import { JwtContext } from '../JwtContext';
 import Nav from './Nav';
+import SessionExpired from './SessionExpired';
 
 
 
@@ -78,26 +79,28 @@ const WatchList = ({ movies, onRemoveMovie }) => {
   return (
     <>
       <Nav />
-    <div className='flex justify-center items-center" bg-slate-400 h-screen'>
+    <div className='flex  bg-auto  justify-center items-center" bg-slate-400 '>
       
     <div>
-      <h2 className="text-xl text-center font-bold mt-3 mb-6">Watch List</h2>
-      <List className="content-center w-full max-w-xs bg-white rounded-lg shadow-lg overflow-hidden divide-y divide-gray-200">
-        {movieData.map((movie) => (
-          <ListItem button key={movie.ID}>
-            <ListItemAvatar>
-              <Avatar className="w-12 h-12" alt={movie.Name} src={`${movie.ImageUrl}`} />
-            </ListItemAvatar>
-            <ListItemText primary={movie.Name} secondary={movie.release_date} />
-            <a href={removeSpace(movie.Name)}><Button>Watch</Button></a>
-            <ListItemSecondaryAction>
-              <IconButton onClick={() => handleRemoveMovie(movie)}>
-                <Delete />
-              </IconButton>
-            </ListItemSecondaryAction>
-          </ListItem>
-        ))}
-      </List>
+          <h2 className="text-xl text-center font-bold mt-3 mb-6">Watch List</h2>
+          {jwt == null || jwt === "" ? <><SessionExpired/></> :
+            <List className="content-center w-full max-w-xs bg-white rounded-lg shadow-lg overflow-hidden divide-y divide-gray-200">
+              {movieData.map((movie) => (
+                <ListItem button key={movie.ID}>
+                  <ListItemAvatar>
+                    <Avatar className="w-12 h-12" alt={movie.Name} src={`${movie.ImageUrl}`} />
+                  </ListItemAvatar>
+                  <ListItemText primary={movie.Name} secondary={movie.release_date} />
+                  <a href={removeSpace(movie.Name)}><Button>Watch</Button></a>
+                  <ListItemSecondaryAction>
+                    <IconButton onClick={() => handleRemoveMovie(movie)}>
+                      <Delete />
+                    </IconButton>
+                  </ListItemSecondaryAction>
+                </ListItem>
+              ))}
+            </List>
+          }
       {/* {selectedMovie && (
         <div>
           <p className="mt-4">Selected Movie: {selectedMovie.title}</p>
@@ -107,8 +110,11 @@ const WatchList = ({ movies, onRemoveMovie }) => {
           </div>
         </div>
       )} */}
+    
+        </div>
+    
       </div>
-      </div>
+
       </>
   );
 };

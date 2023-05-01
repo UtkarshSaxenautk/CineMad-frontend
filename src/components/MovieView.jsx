@@ -4,7 +4,9 @@ import { useContext } from "react";
 import { useState } from "react";
 import { useEffect } from "react";
 import { SearchContext, TypeContext } from "../JwtContext";
-import Foot from "./Foot";
+
+ import { ToastContainer, toast } from 'react-toastify';
+  import 'react-toastify/dist/ReactToastify.css';
 
 //var APIURL = 'https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=04c35731a5ee918f014970082a0088b1&page=1';
 //var SEARCHAPI = "https://api.themoviedb.org/3/search/movie?&api_key=04c35731a5ee918f014970082a0088b1&query=";
@@ -33,6 +35,7 @@ function Movie() {
       .catch(
         (error) => {
           console.log(error)
+          toast("error in getting movies from server please try again later")
         }
       )
   }
@@ -51,6 +54,7 @@ function Movie() {
       .catch(
         (error) => { 
           console.log(error);
+          toast("error in getting movies from server please try again later")
         }
       )
   }
@@ -59,7 +63,7 @@ function Movie() {
     if (search === "") {
       getAllMovies();
     }
-    else if (type === "everything" || search === "") {
+    else if (type === "everything" || search === "" || type === "") {
       setSEARCHAPI("https://api.themoviedb.org/3/search/movie?&api_key=04c35731a5ee918f014970082a0088b1&query=");
       getSearchedMovies()
     } else if (type === "actor") {
@@ -102,7 +106,7 @@ function Movie() {
       }
       
       </div>
-      
+      <ToastContainer/>
       </>
     
   );

@@ -5,6 +5,9 @@ import axios from "axios";
 import { CurrentMoods, JwtContext } from "../JwtContext";
 import Nav from "./Nav";
 import { useNavigate } from 'react-router-dom'
+ import { ToastContainer, toast } from 'react-toastify';
+  import 'react-toastify/dist/ReactToastify.css';
+import SessionExpired from "./SessionExpired";
 
 function getCookie(name) {
   const cookieString = decodeURIComponent(document.cookie);
@@ -55,13 +58,17 @@ function MoodForm() {
   useEffect(() => {
     console.log("userMoods updated:", userMoods);
     setCurrentMoods(userMoods);
-      console.log("currentMoods", currentMoods);
+    console.log("currentMoods", currentMoods);
   }, [userMoods]);
   
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
     console.log(formData);
+    if (formData.currentMood == "" && formData.favoriteActors == "") {
+      toast("please fill one of following input fields")
+      return 
+    }
     let moods = extractMoods(formData.currentMood.toLowerCase());
     setUserMoods(moods);
     setCurrentMoods(moods)
@@ -87,6 +94,7 @@ function MoodForm() {
       navigate('/');
     } catch (error) {
       console.log(error);
+      toast("having some internal issue try after sometime")
       return;
     }
   };
@@ -98,37 +106,43 @@ function MoodForm() {
   const renderForm = () => {
     return (
       <>
-        <div className="aling-top">
-          <Nav />
-          </div>
-        <div>
-          <br/>
-      <form onSubmit={handleFormSubmit}>
-        <div className="mb-4">
-          <TextField
-            fullWidth
-            label="Current Moods like:sad,happy,.."
-            name="currentMood"
-            variant="outlined"
-            value={formData.currentMood}
-            onChange={handleInputChange}
-          />
-        </div>
-        <div className="mb-4">
-          <TextField
-            fullWidth
-            label="Favorite Actors:Keanu,Benedict,.."
-            name="favoriteActors"
-            variant="outlined"
-            value={formData.favoriteActors}
-            onChange={handleInputChange}
-          />
-        </div>
-        <Button variant="contained" color="primary" type="submit">
-          Submit
-        </Button>
-          </form>
-          </div>
+        {jwt == null || jwt === "" ? <><SessionExpired/></> :
+          <>
+            <ToastContainer />
+            <div className="aling-top">
+              <Nav />
+            </div>
+            <div>
+              <br />
+              <form onSubmit={handleFormSubmit}>
+                <div className="mb-4">
+                  <TextField
+                    fullWidth
+                    label="Current Moods like:sad,happy,.."
+                    name="currentMood"
+                    variant="outlined"
+                    value={formData.currentMood}
+                    onChange={handleInputChange}
+                  />
+                </div>
+                <div className="mb-4">
+                  <TextField
+                    fullWidth
+                    label="Favorite Actors:Keanu,Benedict,.."
+                    name="favoriteActors"
+                    variant="outlined"
+                    value={formData.favoriteActors}
+                    onChange={handleInputChange}
+                  />
+                </div>
+                <Button variant="contained" color="primary" type="submit">
+                  Submit
+                </Button>
+              </form>
+            </div>
+        
+          </>
+        }
         </>
     );
   };

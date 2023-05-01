@@ -10,6 +10,8 @@ import SignUp from "./Signup";
 import { JwtContext, UserProfileContext } from "../JwtContext";
 import { useNavigate } from "react-router-dom";
 import Nav from "./Nav";
+ import { ToastContainer, toast } from 'react-toastify';
+  import 'react-toastify/dist/ReactToastify.css';
 
 
 
@@ -38,10 +40,12 @@ const SignIn = () => {
     
     e.preventDefault();
     if (!validate(email) ){
-       alert("invalid email")
+      toast("invalid email")
+      return 
     }
     if (password.length <= 5) {
-      alert("password must be more than 5 characters")
+      toast("password must be more than 5 characters")
+      return 
     }
     const data = {
           "email": email,
@@ -58,7 +62,7 @@ const SignIn = () => {
 
       // Store JWT in cookie
         const expirationTime = new Date(); // Set your desired expiration time here
-expirationTime.setMinutes(expirationTime.getMinutes + 2400); // Example: expires in 30 minutes
+      expirationTime.setMinutes(expirationTime.getMinutes + 2400); // Example: expires in 30 minutes
       
 // Set the cookie with the expiration time
       cookies.set("jwt", response.data, { path: "/", expires: expirationTime });
@@ -67,8 +71,13 @@ expirationTime.setMinutes(expirationTime.getMinutes + 2400); // Example: expires
       
       // Handle successful sign-in response here
     } catch (error) {
-      console.log(error); // Handle sign-in error response here
-      alert("invalid email or password")
+      console.log(error); 
+      if (error.code == "ERR_BAD_REQUEST") {
+        toast("invalid passworrd or email");
+      }
+      else {
+        toast("internal error try after sometime")
+      }
       return 
     }
   };
@@ -143,14 +152,15 @@ expirationTime.setMinutes(expirationTime.getMinutes + 2400); // Example: expires
           required/>
 		</div>
 		<div className="inputBox justify-center bg-white text-center h-7">
-			 <button type="submit">Sign In</button>
+              <button type="submit">Sign In</button>
+             
 		</div>
 		<div className="group">
 			<a href="#"> forget Password</a>
 			<a href="/signup">Sign Up</a>
 		</div>
 	</form>
-	
+	  <ToastContainer />
 </section>
 
                 </>

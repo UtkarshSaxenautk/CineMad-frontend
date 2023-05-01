@@ -73,17 +73,23 @@ const Logout = () => {
 
   return (
     <div>
+    <div className="text-center flex justify-center mt-20 ">
       Thank you For Your Support 
       Your session is completed
-
-      Again want to Login
-      <button onClick={handleBack}> Login </button>
-
-      
       {redirectCounter > 0 && (
         <p>Redirecting in {redirectCounter} seconds...</p>
       )}
-    </div>
+      </div>
+      <br />
+      <br />
+      <p className="text-center text-2xl">Again want to Login:--- 
+        <button className="text-center mt-4 border-x-2 border-y-2 border-black" onClick={handleBack}> Login </button>
+      </p>
+
+      
+      
+      
+      </div>
   );
 };
 

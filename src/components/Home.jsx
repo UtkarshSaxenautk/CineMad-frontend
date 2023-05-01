@@ -6,6 +6,7 @@ import Foot from './Foot';
 import { JwtContext } from '../JwtContext';
 import Movie from './MovieView';
 import MovieTwo from './MovieView2';
+import SessionExpired from './SessionExpired';
 
 
 
@@ -40,7 +41,10 @@ const Home = () => {
       <Nav />
       <div className='bg-gray-700'>
         <Movie />
-        <MovieTwo/>
+        {
+          jwt == null || jwt === "" ? <></>:<MovieTwo/>
+        }
+        
         <Foot />
          </div>
        

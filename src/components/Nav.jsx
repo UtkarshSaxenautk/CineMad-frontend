@@ -21,6 +21,7 @@ import LongMenu from './DropDown';
 import FilterMenu from './SearchFilter';
 import { JwtContext, SearchContext } from '../JwtContext';
 import { useContext } from 'react';
+import { useNavigate } from 'react-router-dom'
 
 
 const pages = [{ Name: 'Mood Tracker', Link: "/moodtracker" }, { Name: 'Top Geners', Link: "/topgeners" }, { Name : 'Watch List', Link:"/watch-list"} ];
@@ -73,7 +74,8 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 function Nav() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-  const {search , setSearch} = useContext(SearchContext)
+  const { search, setSearch } = useContext(SearchContext)
+  const navigate = useNavigate();
 
   const changeTheSearch = (event) => {
     console.log(event.target.value , " is value");
@@ -163,15 +165,15 @@ function Nav() {
             >
               {pages.map((page) => (
                   <MenuItem sx={{ color: '#BD6513' , 'outlineStyle':'solid' , 'outlineColor':'#BD6513'}} className='text-amber-700 bg-black !important' key={page.name} onClick={handleCloseNavMenu}>
-                      <a href={page.Link}>
+                      <button onClick={() => {navigate(page.Link)}} >
                           <Typography textAlign="center">{page.Name}</Typography>
-                          </a>
+                          </button>
                 </MenuItem>
               ))}
               <MenuItem sx={{ color: '#BD6513' , 'outlineStyle':'solid' , 'outlineColor':'#BD6513'}} className='text-amber-700 bg-black !important'  onClick={handleCloseNavMenu}>
-                      <a href='/'>
+                      <button onClick={()=> {navigate('/')}}>
                           <Typography textAlign="center">Langauge</Typography>
-                          </a>
+                          </button>
               </MenuItem>
               <MenuItem>
                   <Box sx={{ flexGrow: 0 }}>
@@ -208,9 +210,9 @@ function Nav() {
             >
               {settings.map((setting) => (
                 <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <a href={setting.Link}>
+                  <button onClick={()=> {navigate(setting.Link)}}>
                     <Typography textAlign="center">{setting.Name}</Typography>
-                    </a>
+                    </button>
                 </MenuItem>
               ))}
                       </Menu>
@@ -239,9 +241,9 @@ function Nav() {
              <FilterMenu /> </></MenuItem>
             </Menu>
                   </Box>
-                                         <a href='/'>
+                                         <button onClick={()=> {navigate('/')}} >
                       <img className='pt-4 pb-4 h-28 w-42 align-left' src={Logo} alt="logo" />
-                      </a>
+                      </button>
           {window.innerWidth > 600 ? 
             <>
                   <div className='sm: pr-2  !important'>
@@ -265,11 +267,11 @@ function Nav() {
          
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }} className= 'justify-end pr-28'>
             {pages.map((page) => (
-                <a href={page.Link} className='text-amber-700 px-6 border-b-amber-700 !important'>
+                <button  onClick={()=> {navigate(page.Link)}} className='text-amber-700 px-6 border-b-amber-700 !important'>
                 <Button sx={{color:'#BD6513' , outlineStyle:'solid' , outlineColor:'#BD6513'}} className='text-amber-700 !important'>
                 {page.Name}
                 </Button>
-                </a>
+                </button>
             ))}
                
            
@@ -317,9 +319,9 @@ function Nav() {
                 {settings.map((setting) => (
                   
                   <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                       <a href={setting.Link}>
+                       <button  onClick={()=> {navigate(setting.Link)}}>
                       <Typography textAlign="center">{setting.Name}</Typography>
-                    </a>
+                    </button>
                     </MenuItem>
                     
                 ))}
