@@ -8,7 +8,7 @@ const Error400 = () => {
     return (
         <>
       <Nav />
-    <div className="container mt-1 flex flex-col h-screen my-auto items-center bgimg bg-cover">
+    <div className="container mt-1 flex flex-col h-screen my-auto items-center bgimg bg-cover style={{background:#828E82;}}">
             <img className='h-3/5 '  src={ errorImg} />
 
       <h1 className='text-3xl'>
@@ -16,7 +16,8 @@ const Error400 = () => {
         Page Not found
       </h1>
       <p> Go back to Home</p>
-      <p><button className=' text-3xl pt-1 px-1 py-1 pb-1 border-x-2 border-y-2 border-black bg-slate-500 rounded-xl' onClick={()=> {navigate('/')}}>Home</button></p>
+          <p className='text-center'>
+            <button className=' mt-8 text-2xl px-10 py-2 rounded-full bg-orange-300 rounded-xl' onClick={() => { navigate('/') }}>Home</button></p>
             </div>
             </>
   )

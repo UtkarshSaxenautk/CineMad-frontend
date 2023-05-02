@@ -75,18 +75,20 @@ const Box = (props) => {
          
     }
     return (
-        <div className='shadow min-h-[200px] mt-3 pb-1'>
-            <img src={props.image} alt={props.title} className='w-full'/>
+        <div className='shadow min-h-[200px] m-2 rounded-lg shadow-lg shadow-stone-600 cursor-pointer hover:shadow-stone800 hover:m-4 duration-75 overflow-hidden'>
+            <img src={props.image} alt={props.title} className='w-full' />
+            <div className='p-2 mb-1'>
             <div className='flex justify-between  px-2 items-center text-white'>
-                <span className='text-xl'>{props.title}</span>s
+                <span className='text-xl font-semibold'>{props.title}</span>s
                 {/* <span className='text-xl text-yellow-500 font-bold'>{props.rating}</span> */}
                 
             </div>
-            <div className='flex justify-between  px-2 items-center mt-4 text-slate-300'>
-                <span className=' rounded-3xl text-xl  justify-start text-left '><button onClick={() => onWatchNow(props.id ,props.url)} ><MovieIcon/>Watch Now</button></span>
+            <div className='flex justify-between  px-2 items-center mt-3 text-slate-300'>
+                <span className=' rounded-3xl text-sm  justify-start text-left '><button onClick={() => onWatchNow(props.id ,props.url)} ><MovieIcon/>Watch Now</button></span>
                 <span className='  rounded-3xl mx-2 text-xl justify-end text-right'><button onClick={() => onWatchLater(props.id)}  ><BookmarkIcon />Watch Later</button></span>
                 
-            </div>
+                </div>
+                </div>
         </div>
     )
 }

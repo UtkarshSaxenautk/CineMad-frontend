@@ -11,7 +11,7 @@ export default function Result(props) {
     const boxes = props.movies.map(
         (item, index) => {
            // console.log("id: "  , item.id)
-            if (!item.adult) {
+            if (!item.adult && item.id !== 73475 && item.original_language === "en" || item.original_language === "hi") {
                 return <Box key={index} image={item.poster_path} title={item.original_title} rating={item.vote_average} id={item.id} />
             }
         }
@@ -69,23 +69,29 @@ const Box = (props) => {
         window.open(url, '_blank');
     }
     return (
-        <>
+        
        
-        <div className='shadow min-h-[200px] mt-3 pb-1'>
-            <img src={IMGPATH + props.image}  alt="" className='w-full' />
-            <div className='flex justify-between  px-2 items-center text-white'>
-                <span className='text-xl'>{props.title}</span>
+        <div className='shadow min-h-[200px] m-2 rounded-lg shadow-lg shadow-stone-600 cursor-pointer hover:shadow-stone800 hover:m-4 duration-75 overflow-hidden'>
+                <img src={IMGPATH + props.image} alt="" className='w-full' />
+            <div className='p-2 mb-1'>
+                <div className='flex justify-between  px-2 items-center text-white'>
+                <span className='text-xl font-semibold'>{props.title}</span>
                 <span className='text-xl text-yellow-500 font-bold'>{props.rating}</span>
                 
-            </div>
-            <div className='flex justify-between  px-2 items-center mt-4 text-slate-300'>
-                <span className=' rounded-3xl text-xl  justify-start text-left '><button onClick={() => onWatchNow(props.id , props.title)} ><MovieIcon/>Watch Now</button></span>
-                <span className='  rounded-3xl mx-2 text-xl justify-end text-right'><button onClick={() => onWatchLater(props.id)}  ><BookmarkIcon />Watch Later</button></span>
-                
                 </div>
+               
+            <div className='flex justify-between  px-2 items-center mt-3 text-slate-300'>
+                    <span className=' rounded-3xl text-sm  justify-start text-left '>
+                        <button onClick={() => onWatchNow(props.id, props.title)} >
+                            <MovieIcon className='mr-1' />
+                            Watch Now</button></span>
+                <span className='  rounded-3xl mx-2 text-sm justify-end text-right'><button onClick={() => onWatchLater(props.id)}  ><BookmarkIcon className='mr-1' />Watch Later</button></span>
+                
+             </div>
                 <ToastContainer/>
             </div>
             
-            </>
+        </div>
+            
     )
 }

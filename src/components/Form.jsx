@@ -119,7 +119,7 @@ const MultipleInputs = () => {
                       <div className="login-container">
                           <h3 className="login-title">Let Us Know Your mood</h3>
                           <form onSubmit={handleFormSubmit}>
-                              <div className="input-group pt-4 pb-4 px-4 py-4">
+                              <div className="input-group pt-4 pb-4 px-6 py-4">
                                   <TextField
                                       fullWidth
                                       label="Current Moods like:sad,happy,.."
@@ -130,10 +130,10 @@ const MultipleInputs = () => {
                                       sx={{padding:6}}
                                   />
                               </div>
-                              <div className="input-group">
+                              <div className="input-group pt-4 pb-4 px-6 py-4">
                                   <TextField
                                       fullWidth
-                                      label="Favorite Actors:Keanu,Benedict,.."
+                                      label="Favorite Actors:Keanu,Roman,.."
                                       name="favoriteActors"
                                       variant="outlined"
                                       value={formData.favoriteActors}
