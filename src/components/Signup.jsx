@@ -147,7 +147,7 @@ const SignUp = () => {
 			 <button type="submit">Create</button>
 		</div>
 		<div className="text-center text-2xl">
-			<a  href="/login"> Sign In</a>
+			<a  href="#"> <button onClick={()=> {navigate('/login')}}> Sign In</button></a>
 		</div>
 	</form>
 	

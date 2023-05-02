@@ -7,6 +7,7 @@ import { SearchContext, TypeContext } from "../JwtContext";
 
  import { ToastContainer, toast } from 'react-toastify';
   import 'react-toastify/dist/ReactToastify.css';
+import Preloader from "./Preloader";
 
 //var APIURL = 'https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=04c35731a5ee918f014970082a0088b1&page=1';
 //var SEARCHAPI = "https://api.themoviedb.org/3/search/movie?&api_key=04c35731a5ee918f014970082a0088b1&query=";
@@ -14,8 +15,8 @@ function Movie() {
   const [movies, setMovies] = useState([]);
   const { search, setSearch } = useContext(SearchContext)
   const { type, setType } = useContext(TypeContext)
-  const [APIURL, setAPIURL ] = useState('https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=04c35731a5ee918f014970082a0088b1&page=1')
-  const [SEARCHAPI , setSEARCHAPI] = useState("https://api.themoviedb.org/3/search/movie?&api_key=04c35731a5ee918f014970082a0088b1&query=")
+  const [APIURL, setAPIURL ] = useState('https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=04c35731a5ee918f014970082a0088b1&page=1&adult=false')
+  const [SEARCHAPI , setSEARCHAPI] = useState("https://api.themoviedb.org/3/search/movie?sort_by=popularity.desc&adult=false&api_key=04c35731a5ee918f014970082a0088b1&query=")
   //const {currentMoods , setCurrentMoods} = useContext(CurrentMoods)
 //   const changeTheSearch = (event) => {
 //     // console.log(event.target.value);
@@ -64,14 +65,14 @@ function Movie() {
       getAllMovies();
     }
     else if (type === "everything" || search === "" || type === "") {
-      setSEARCHAPI("https://api.themoviedb.org/3/search/movie?&api_key=04c35731a5ee918f014970082a0088b1&query=");
+      setSEARCHAPI("https://api.themoviedb.org/3/search/movie?sort_by=popularity.desc&adult=false&api_key=04c35731a5ee918f014970082a0088b1&adult=false&query=");
       getSearchedMovies()
     } else if (type === "actor") {
-      setSEARCHAPI("https://api.themoviedb.org/3/search/movie?&api_key=04c35731a5ee918f014970082a0088b1&query=");
+      setSEARCHAPI("https://api.themoviedb.org/3/search/movie?sort_by=popularity.desc&adult=false&api_key=04c35731a5ee918f014970082a0088b1&adult=false&query=");
       getSearchedMovies()
       console.log(SEARCHAPI , "set ")
     }else {
-      setSEARCHAPI("https://api.themoviedb.org/3/search/" + type + "?&api_key=04c35731a5ee918f014970082a0088b1&query=");
+      setSEARCHAPI("https://api.themoviedb.org/3/search/" + type + "?sort_by=popularity.desc&adult=false&api_key=04c35731a5ee918f014970082a0088b1&adult=false&query=");
       // console.log("Hello");
       getSearchedMovies()
       console.log(SEARCHAPI)
@@ -99,7 +100,7 @@ function Movie() {
       {
         movies.length === 0
           ?
-          <div className="text-3xl text-center mt-2"> Loading... </div>
+          <div className="text-3xl text-center mt-2"> <Preloader/> </div>
           :
           <Result movies={movies} />
 

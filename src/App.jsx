@@ -11,6 +11,7 @@ import MoodForm from "./components/Main";
 import WatchList from "./components/WatchList";
 import Error500 from './components/500';
 import Error400 from './components/400';
+import MultipleInputs from './components/Form';
 
 export default function App(){
   const [jwt, setJwt] = useState('');
@@ -35,8 +36,9 @@ export default function App(){
             <Route path="/signup" element={<SignUp />} />
                 <Route path="/logout" element={<Logout />} />
                   <Route path="/profile" element={<ProfilePage />} />
-                  <Route path="/moodtracker" element={<MoodForm />} />
+                  <Route path="/moodtracker" element={<MultipleInputs />} />
                   <Route path="/watch-list" element={<WatchList />} />
+                  
                   <Route path="*" element={<Error400/>}/>
              </Routes> 
               

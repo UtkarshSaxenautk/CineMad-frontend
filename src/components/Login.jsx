@@ -155,9 +155,10 @@ const SignIn = () => {
               <button type="submit">Sign In</button>
              
 		</div>
-		<div className="group">
-			<a href="#"> forget Password</a>
-			<a href="/signup">Sign Up</a>
+		
+			<div className="text-center text-2xl">
+			<a  href="#"> <button onClick={()=> {navigate('/signup')}}> Sign Up</button></a>
+	
 		</div>
 	</form>
 	  <ToastContainer />

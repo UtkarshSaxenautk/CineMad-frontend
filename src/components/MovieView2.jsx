@@ -8,6 +8,7 @@ import ResultOne from "./Result1";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {useNavigate} from 'react-router-dom'
+import Preloader from "./Preloader";
 
 
 function getCookie(name) {
@@ -134,13 +135,13 @@ function MovieTwo() {
                   <>  
             <div className="mt-4">
                 
-    <div className="max-w-[1240px] shadow-xl min-h-[400px] mx-auto p-3 ">
+    <div className="max-w-[1240px] shadow-xl min-h-[400px] mx-auto p-3 bg-slate-600 ">
       {/* <input type="search" value={search} onChange={changeTheSearch} className="w-full border border-black rounded text-slate-700 p-4" /> */}
-      <h2 className="text-center text-gray-200 text-2xl">Mood Emphasizer:  Let's Go According to your mood</h2>
+      <h2 className="text-center mt-4 mb-4 pt-5 pb-5  text-gray-800 text-4xl">Mood Emphasizer:  Let's Go According to your mood</h2>
                                         {
         sameMovies == null ||  sameMovies.length === 0
           ?
-          <div className="text-3xl text-center mt-2"> Loading... </div>
+          <div className="text-3xl text-center mt-2 "> <Preloader/> </div>
       
           :
           <ResultOne movies={sameMovies} />
@@ -150,13 +151,13 @@ function MovieTwo() {
                 </div></div>
             <div className="mt-4">
                 
-                <div className="max-w-[1240px] shadow-xl min-h-[400px] mx-auto p-3 ">
+                <div className="max-w-[1240px] shadow-xl min-h-[400px] mx-auto p-3 bg-slate-900 ">
       {/* <input type="search" value={search} onChange={changeTheSearch} className="w-full border border-black rounded text-slate-700 p-4" /> */}
-      <h2 className="text-center text-gray-200 text-2xl">Mood Changer:  Let's Change your mood</h2>
+      <h2 className="text-center mt-4 mb-4 pt-5 pb-5  text-gray-200 text-4xl">Mood Changer:  Let's Change your mood</h2>
                                         {
         oppositeMovies == null ||  oppositeMovies.length === 0
           ?
-          <div className="text-3xl text-center mt-2"> Loading... </div>
+          <div className="text-3xl text-white text-center mt-2"> Loading... </div>
           :
           <ResultOne movies={oppositeMovies} />
 

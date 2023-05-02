@@ -78,6 +78,7 @@ const WatchList = ({ movies, onRemoveMovie }) => {
 
   return (
     <>
+      <div className='bg-slate-400 bg-auto h-full'>
       <Nav />
     <div className='flex  bg-auto  justify-center items-center" bg-slate-400 '>
       
@@ -114,7 +115,7 @@ const WatchList = ({ movies, onRemoveMovie }) => {
         </div>
     
       </div>
-
+   </div>
       </>
   );
 };

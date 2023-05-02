@@ -4,6 +4,7 @@ import axios from "axios";
 import "./Profile.css";
 import Nav from './Nav'
 import SessionExpired from "./SessionExpired";
+import Preloader from "./Preloader";
 
 
 function getCookie(name) {
@@ -60,7 +61,7 @@ const ProfilePage = () => {
     <>
       {isLoading ? (
         // Show preloader while waiting for data to load
-        <div>Loading...</div>
+        <div><Preloader /></div>
       ) : (
         <div className="bg-gray-400 min-h-screen py-8 px-4 sm:px-8 lg:px-16 xl:px-32">
           <h1 className="text-4xl text-center font-bold mb-2 text-neutral-900">Profile Page</h1>
