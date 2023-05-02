@@ -1,126 +1,174 @@
-import React, { useState, useEffect, useContext } from "react";
-import { JwtContext, UserProfileContext } from "../JwtContext";
-import axios from "axios";
-import "./Profile.css";
-import Nav from './Nav'
-import SessionExpired from "./SessionExpired";
+/* eslint-disable react/prop-types */
+import React, { useContext , useState,useEffect } from 'react'
+import BookmarkIcon from '@mui/icons-material/Bookmark';
+import MovieIcon from '@mui/icons-material/Movie'
+import { JwtContext } from '../JwtContext';
+import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import Preloader from './Preloader';
+import Nav from './Nav';
 
 
-function getCookie(name) {
-  const cookieString = decodeURIComponent(document.cookie);
-  const cookies = cookieString.split(";");
-  for (let i = 0; i < cookies.length; i++) {
-    const cookie = cookies[i].trim();
-    if (cookie.indexOf(name) === 0) {
-      return cookie.substring(name.length + 1);
-    }
+function TopGenre() {
+  const [movies, setMovies] = useState([]);
+  const APIURL = "https://api.themoviedb.org/3/trending/movie/day?api_key=04c35731a5ee918f014970082a0088b1"
+  const APIURL2 = "https://api.themoviedb.org/3/trending/movie/week?&api_key=04c35731a5ee918f014970082a0088b1"
+  
+  
+  const getAllMovies = () => {
+    Promise.all([axios.get(APIURL), axios.get(APIURL2)])
+  .then((responses) => {
+    const arr1 = responses[0].data.results;
+    const arr2 = responses[1].data.results;
+    const allResults = arr1.concat(arr2);
+    console.log("All results: ", allResults);
+    setMovies(allResults);
+  })
+  .catch((error) => {
+    console.log(error);
+    toast("error in getting movies from server please try again later");
+  });
+    // axios.get(APIURL)
+    //   .then(
+    //     (response) => {
+    //       console.log(response.data.results)
+    //       setMovies(response.data.results);
+    //     }
+    //   )
+    //   .catch(
+    //     (error) => {
+    //       console.log(error)
+    //       toast("error in getting movies from server please try again later")
+    //     }
+    //   )
   }
-  return null;
+
+  
+
+  
+
+  useEffect(
+    () => {
+      setMovies([]);
+      
+        getAllMovies();
+     
+       
+      
+    },
+    []
+  )
+
+  return (
+    <>
+    <Nav/>
+    <div className="max-w-[1240px] shadow-xl min-h-[200px] mx-auto p-3 ">
+      {/* <input type="search" value={search} onChange={changeTheSearch} className="w-full border border-black rounded text-slate-700 p-4" /> */}
+      {
+        movies.length === 0
+          ?
+          <div className="text-3xl text-center mt-2"> <Preloader/> </div>
+          :
+          <ResultTop movies={movies} />
+
+      }
+      
+      </div>
+      <ToastContainer/>
+      </>
+    
+  );
 }
 
-const ProfilePage = () => {
-  const { jwt, setJwt } = useContext(JwtContext);
-  const { userProfile, setUserProfile } = useContext(UserProfileContext);
-  const [isLoading, setIsLoading] = useState(true);
-  const [moviesWatched, setMoviesWatched] = useState([]);
+export default TopGenre;
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const tempJwt = getCookie("jwt");
-        console.log(jwt);
-        if (jwt === "" || jwt == null) {
-          setJwt(tempJwt);
-        }
-        const body = {
-          jwt: tempJwt,
-        };
-        const response = await axios.post(
-          "http://localhost:50081/user/getprofile",
-          body
-        );
-        console.log(response.data);
-        setUserProfile(response.data);
-        setIsLoading(false);
-        setMoviesWatched([
-          ...moviesWatched,
-          ...response.data.MoviesWatchedInformation,
-        ]);
-      } catch (error) {
-        console.log(error);
-        setIsLoading(false);
+
+function ResultTop(props) {
+  const boxes = props.movies.map(
+      (item, index) => {
+         // console.log("id: "  , item.id)
+          if (!item.adult && item.id !== 73475 && item.original_language === "en" || item.original_language === "hi") {
+              return <MovieBox key={index} image={item.poster_path} title={item.original_title} rating={item.vote_average} id={item.id} />
+          }
       }
-    };
-    fetchData();
-  }, []);
-  console.log(moviesWatched);
-    return (
-        <>
-            <Nav />
-    <>
-      {isLoading ? (
-        // Show preloader while waiting for data to load
-        <div>Loading...</div>
-      ) : (
-        <div className="bg-gray-400 min-h-screen py-8 px-4 sm:px-8 lg:px-16 xl:px-32">
-          <h1 className="text-4xl text-center font-bold mb-2 text-neutral-900">Profile Page</h1>
-          {jwt === "" || jwt == null ? (
-            // <div className="pt-16 justify-center text-center ">
-            //   <a className="text-center bg-slate-500 text-4xl rounded-lg border-x-4 border-black border-y-4" href="/login">
-            //     <button >Login First</button>
-            //   </a>
-            // </div>
-           <SessionExpired />
-          ) : (
-            <>
-              <div className="bg-black text-white rounded-3xl shadow-lg p-8 mb-8">
-                <h2 className="text-2xl font-semibold mb-12 text-center">Profile Info</h2>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <h3 className="text-xl font-semibold mb-2">Username</h3>
-                    {/* Display username from user data */}
-                    <p className="text-gray-600">{userProfile.Username}</p>
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-semibold mb-2 text-right">Current Mood</h3>
-                    {/* Display current mood from user data */}
-                    <p  className="text-right text-gray-600">
-                      {userProfile.MoodPreviously[0]}
-                    </p>
-                                                </div>
-                                                
-                  <div>
-                    <h3 className="text-xl font-semibold mb-2">Email</h3>
-                    {/* Display email from user data */}
-                    <p className="text-gray-600">{userProfile.Email}</p>
-                  </div>
-                </div>
-                <div></div>
-                                        </div>
-                                         <h2 className="text-center text-3xl mb-14">Top Movies</h2>
-                                   <main className="grid">
-                        {userProfile.MoviesWatchedInformation === null ? <>
-                        </>:<>
-  
-                                  {userProfile.MoviesWatchedInformation.map((movie) => (
-                                       <article key={movie.ID}>
-                                          <img className="h-96 w-full" src={movie.ImageUrl} alt={ movie.Name} />
-      <div className="text">
-        <h3>{movie.Name}</h3>
-        <p>{movie.OverView}</p>
-        <a href={movie.Url} className="btn btn-primary btn-block">Watch</a>
+  )
+  return (
+      <div className='w-full grid md:grid-cols-4 gap-5'>
+          {boxes}
       </div>
-    </article>
-                                     
-                                  ))}</>}
-                                      </main>
-            </>
-          )}
-        </div>
-      )}
-            </>
-            </>
-  );
-};
+  )
+}
 
-export default ProfilePage;
+
+const MovieBox = (props) => {
+  const {jwt , setJwt} = useContext(JwtContext)
+  const IMGPATH = "https://image.tmdb.org/t/p/w1280";
+
+  const onWatchLater = async(movieId) => {
+      console.log("onWatchLater: ", movieId)
+       const data = {
+      "id" : movieId+"",
+       "jwt":jwt,
+      "isMovieDB":true,
+      "type":"movie",
+ 
+      }
+      try {
+  const response = await axios.post("http://localhost:50081/user/updateWatchLater", data);
+          console.log(response.data); // handle successful sign-up response here
+           toast("added to  watch later")
+    //navigate('/')
+} catch (error) {
+          console.log(error.response.data); // handle sign-up error response here
+           toast("failed to add in watch later")
+}
+  }
+  const onWatchNow = async(movieId , title) => {
+      console.log("onWatchLater: ", movieId)
+      console.log("title : " , title)
+      const data = {
+      
+       "jwt":jwt,
+      "movie":movieId+"",
+     
+ 
+      }
+      
+      try {
+     const response = await axios.post("http://localhost:50081/user/updateWatchedMovie", data);
+      console.log(response.data); 
+      //navigate('/')
+      } catch (error) {
+  console.log(error.response.data); 
+      }
+      const url = "https://www.justwatch.com/in/search?q=" + title
+      window.open(url, '_blank');
+  }
+  return (
+      
+     
+      <div className='shadow min-h-[200px] m-2 rounded-lg shadow-lg shadow-stone-600 cursor-pointer hover:shadow-stone800 hover:m-4 duration-75 overflow-hidden'>
+              <img src={IMGPATH + props.image} alt="" className='w-full' />
+          <div className='p-2 mb-1'>
+              <div className='flex justify-between  px-2 items-center text-white'>
+              <span className='text-xl font-semibold'>{props.title}</span>
+              <span className='text-xl text-yellow-500 font-bold'>{props.rating}</span>
+              
+              </div>
+             
+          <div className='flex justify-between  px-2 items-center mt-3 text-slate-300'>
+                  <span className=' rounded-3xl text-sm  justify-start text-left '>
+                      <button onClick={() => onWatchNow(props.id, props.title)} >
+                          <MovieIcon className='mr-1' />
+                          Watch Now</button></span>
+              <span className='  rounded-3xl mx-2 text-sm justify-end text-right'><button onClick={() => onWatchLater(props.id)}  ><BookmarkIcon className='mr-1' />Watch Later</button></span>
+              
+           </div>
+              <ToastContainer/>
+          </div>
+          
+      </div>
+          
+  )
+}
