@@ -14,7 +14,7 @@ const Error500 = () => {
         Internal server error 500
       </h1>
       <p>We are currently trying to fix the problem. Go back to Home?</p>
-      <p><button className='border-x-2 border-y-2 border-black  bg-slate-500 rounded-xl' onClick={()=> {navigate('/')}}>Home</button></p>
+      <p><button className='border-x-2 border-y-2 border-black  bg-orange-300 rounded-xl' onClick={()=> {navigate('/')}}>Home</button></p>
     </div>
   )
 }

@@ -42,7 +42,7 @@ const MultipleInputs = () => {
   };
 
   const extractMoods = (moods) => {
-    const regex = /(happy|sad|depressed|cheerful|good|thrilling|adventurous|nostlagic|bad|anxious|stressed|overwhelmed|fear|suprise|disgust|depress|feelinggood|joy|cheering|loving|relax|delighted|pleased|glad|satisfied|thankful|joyful|joyous|blissful|unhappy|heartbroken|misery|miserable|sorry|upset|worried|disappointed|hopeless|suicidal|discouraged|dark|low|regret|friendzone|ugly|horrible|awful|shocking|hideous|sickening|anxiety|fearfulness|panic|terror|fright|worry|horror|scared|rage|fury|wrath|irritation|irritated|temper|mad|envy)/gi;
+    const regex = /(happy|sad|depressed|cheerful|good|thrilling|adventurous|nostlagic|bad|anxious|stressed|overwhelmed|fear|surprise|suprise|disgust|depress|feelinggood|joy|cheering|loving|relax|delighted|pleased|glad|satisfied|thankful|joyful|joyous|blissful|unhappy|heartbroken|misery|miserable|sorry|upset|worried|disappointed|hopeless|suicidal|discouraged|dark|low|regret|friendzone|ugly|horrible|awful|shocking|hideous|sickening|anxiety|fearfulness|panic|terror|fright|worry|horror|scared|rage|fury|wrath|irritation|irritated|temper|mad|envy|motivated)/gi;
   const res = moods.match(regex);
   return res;
     // const regex = /(happy|sad|depressed|cheerful|good|thrilling|adventurous|nostlagic|bad|anxious|stressed|overwhelmed|fear|suprise|disgust|depress|feelinggood|joy|cheering|loving|relax|delighted|pleased|glad|satisfied|thankful|joyful|joyous|blissful|unhappy|heartbroken|misery|miserable|sorry|upset|worried|disappointed|hopeless|suicidal|discouraged|dark|low|regret|friendzone|ugly|horrible|awful|shocking|hideous|sickening|anxiety|fearfulness|panic|terror|fright|worry|horror|scared|rage|fury|wrath|irritation|irritated|temper|mad|envy) /gi;
@@ -111,15 +111,15 @@ const MultipleInputs = () => {
 
   return (
     <>
-      
-          {jwt == null || jwt === "" ? <><SessionExpired /></> :
-              <>
+        <Nav/>
+          {jwt == null || jwt === "" ? <><SessionExpired  /></> :
+              <div className="aling-top">
                   <ToastContainer />
                   <div className="full-screen-container"> 
                       <div className="login-container">
                           <h3 className="login-title">Let Us Know Your mood</h3>
                           <form onSubmit={handleFormSubmit}>
-                              <div className="input-group pt-4 pb-4 px-6 py-4">
+                              <div className="input-group  px-6 ">
                                   <TextField
                                       fullWidth
                                       label="Current Moods like:sad,happy,.."
@@ -130,7 +130,7 @@ const MultipleInputs = () => {
                                       sx={{padding:6}}
                                   />
                               </div>
-                              <div className="input-group pt-4 pb-4 px-6 py-4">
+                              <div className="input-group  px-6 ">
                                   <TextField
                                       fullWidth
                                       label="Favorite Actors:Keanu,Roman,.."
@@ -145,7 +145,7 @@ const MultipleInputs = () => {
                           </form>
                       </div>
                   </div>
-              </>
+              </div>
           }
           </>
   );

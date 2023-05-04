@@ -24,8 +24,8 @@ import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom'
 
 
-const pages = [{ Name: 'Mood Tracker', Link: "/moodtracker" }, { Name: 'Top Geners', Link: "/topgeners" }, { Name : 'Watch List', Link:"/watch-list"} ];
-const settings1 = [{ Name: 'Profile', Link: "/profile" }, { Name: 'Account', Link: "/account" }, {Name:'Logout', Link: '/logout'}];
+const pages = [{ Name: 'Mood Tracker', Link: "/moodtracker" }, { Name: 'Get Started', Link: "/guide" }, { Name : 'Watch List', Link:"/watch-list"} ];
+const settings1 = [{ Name: 'Profile', Link: "/profile" },  {Name:'Logout', Link: '/logout'}];
 const settings2 = [{ Name: 'Login', Link: "/login" }, { Name: 'Signup', Link: "/signup" }, {Name:'Profile', Link: '/profile'}];
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -103,7 +103,7 @@ function Nav() {
       // console.log("Hello");
       if (search === "") {
         //getAllMovies();
-        console.log("lol empty")
+        console.log("search empty")
       } else {
         //getSearchedMovies();
         console.log("searched : " , search)

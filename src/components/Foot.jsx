@@ -8,12 +8,12 @@ const Foot = () => {
       
       <div className="logo row">
         <div className="footer-header">
-          <img src={logo} className="manik" alt=""/>
+          <img src={logo} className="manik ml-3" alt=""/>
         </div>
-        <div className="logo-des">
-          <p>Get your movies according to mood. Top Movies Suggestions and your personal movie tracker</p>
+        <div className="px-4 logo-des">
+          <p className='px-4'>Get your movies according to mood. Top Movies Suggestions and your personal movie tracker</p>
           
-          <a href="#" className="btn-know">Know More</a>
+          <a href="#" className="btn-know ml-3">Know More</a>
         </div>
         
         
@@ -42,7 +42,7 @@ const Foot = () => {
         
         <div className="link-des">
           <a href="#" className="footer-links">Home</a>
-          <a href="#" className="footer-links">About</a>
+          <a href="/guide" className="footer-links">Guide</a>
           <a href="#" className="footer-links">Services</a>
           <a href="#" className="footer-links">Galary</a>
           <a href="#" className="footer-links">Contact</a>

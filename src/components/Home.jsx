@@ -7,6 +7,7 @@ import { JwtContext } from '../JwtContext';
 import Movie from './MovieView';
 import MovieTwo from './MovieView2';
 import SessionExpired from './SessionExpired';
+import PopUpPage from './PopUp';
 
 
 
@@ -35,24 +36,26 @@ const Home = () => {
   }
   console.log(jwt, " : is jwt after in home")
   return (
-    <>
+    <div className='bg-gray-900'>
       {/* <Navigation /> */}
      
       <Nav />
-      <div className='bg-gray-700'>
-        <Movie />
-        {
+      <PopUpPage />
+      <div className='bg-gray-900'>
+         {
           jwt == null || jwt === "" ? <></>:<MovieTwo/>
-        }
+         }
+        <Movie />
+       
         
         <Foot />
-         </div>
+      </div>
        
      
       {/* <Footer /> */}
      
      
-      </>
+      </div>
   )
 }
 

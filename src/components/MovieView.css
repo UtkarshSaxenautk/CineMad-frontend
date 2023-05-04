@@ -1,0 +1,30 @@
+
+#neonShadow {
+    height: 50px;
+    width: 100px;
+    border: none;
+    border-radius: 50px;
+    transition: 0.3s;
+    background-color: rgba(236, 255, 252, 0.639);
+    animation: glow 1s infinite;
+    transition: 0.5s;
+}
+#neonShadow:hover {
+    transform: translateX(-20px)rotate(30deg);
+    border-radius: 5px;
+    background-color: #cbc4d2;
+    transition: 0.5s;
+}
+@keyframes glow {
+    0% {
+        box-shadow: 5px 5px 20px rgb(103, 101, 107), -5px -5px 20px rgb(140, 127, 164);
+    }
+
+    50% {
+        box-shadow: 5px 5px 20px rgb(68, 70, 69), -5px -5px 20px rgb(59, 66, 66)
+    }
+
+    100% {
+        box-shadow: 5px 5px 20px rgb(35, 35, 36), -5px -5px 20px rgb(173, 170, 178)
+    }
+}

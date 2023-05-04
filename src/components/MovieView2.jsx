@@ -9,6 +9,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {useNavigate} from 'react-router-dom'
 import Preloader from "./Preloader";
+import './MovieView.css'
 
 
 function getCookie(name) {
@@ -118,26 +119,29 @@ function MovieTwo() {
   )
 
     return (
-        <>
+        <div>
             {jwt == null || jwt === "" ? <></> :
                 <>
                     {
                         currentMoods == null || currentMoods.length === 0 ? <>
-                            <div className="mt-8 justify-center align-middle">
-                            <h1 className="text-3xl text-slate-300 text-center">
+                <div className=" justify-center align-middle border-y-2 border-gray-300">
+                
+                            <h1 className="text-3xl mt-1 text-gray-300 font-extrabold text-center">
                                 For personalized suggestions let us know your mood
-                                </h1>
-                                <p className="text-center mt-12">
-                                    <button className=" text-3xl text-center justify-center border-x-4 border-y-4 rounded-2xl bg-slate-900 text-white pt-1 pb-1 px-1 py-1" onClick={() => { navigate('/moodtracker') }}>How you are Feeling!</button>
+                    </h1>
+                 
+                  <p className="text-center mt-4 mb-2  ">
+                      <button id="neonShadow"  onClick={() => { navigate('/moodtracker') }}><span>Let's Go</span></button>
+                                    {/* <button className=" text-3xl text-center justify-center border-x-4 border-y-4 rounded-2xl bg-slate-900 text-white pt-1 pb-1 px-1 py-1" onClick={() => { navigate('/moodtracker') }}>How you are Feeling!</button> */}
                                     </p>
                                 </div>
                         </> :
                   <>  
-            <div className="mt-4">
+            <div className="mt-2">
                 
-    <div className="max-w-[1240px] shadow-xl min-h-[400px] mx-auto p-3 bg-slate-600 ">
+    <div className="max-w-[1240px] shadow-xl min-h-[400px] mx-auto p-3 backdrop-blur-sm ">
       {/* <input type="search" value={search} onChange={changeTheSearch} className="w-full border border-black rounded text-slate-700 p-4" /> */}
-      <h2 className="text-center mt-4 mb-4 pt-5 pb-5  text-gray-800 text-4xl">Mood Emphasizer:  Let's Go According to your mood</h2>
+      <h2 className="text-center mt-4 mb-4 pt-5 pb-5  text-amber-600 text-4xl">Mood Emphasizer:  Let's Go According to your mood</h2>
                                         {
         sameMovies == null ||  sameMovies.length === 0
           ?
@@ -153,11 +157,11 @@ function MovieTwo() {
                 
                 <div className="max-w-[1240px] shadow-xl min-h-[400px] mx-auto p-3 bg-slate-900 ">
       {/* <input type="search" value={search} onChange={changeTheSearch} className="w-full border border-black rounded text-slate-700 p-4" /> */}
-      <h2 className="text-center mt-4 mb-4 pt-5 pb-5  text-gray-200 text-4xl">Mood Changer:  Let's Change your mood</h2>
+      <h2 className="text-center mt-4 mb-4 pt-5 pb-5  text-amber-700 font-bold text-4xl">Mood Changer:  Let's Change your mood</h2>
                                         {
         oppositeMovies == null ||  oppositeMovies.length === 0
           ?
-          <div className="text-3xl text-white text-center mt-2"> Loading... </div>
+          <div className="text-3xl text-white text-center mt-2"> <Preloader/> </div>
           :
           <ResultOne movies={oppositeMovies} />
 
@@ -170,7 +174,7 @@ function MovieTwo() {
                     </>
             
             }
-            </>
+            </div>
     
   );
 }
