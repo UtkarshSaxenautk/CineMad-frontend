@@ -10,7 +10,7 @@ import SessionExpired from './SessionExpired';
 import PopUpPage from './PopUp';
 
 
-
+// function to get jwt which is saved in Cookie 
 function getCookie(name) {
   const cookieString = decodeURIComponent(document.cookie);
   const cookies = cookieString.split(';');
@@ -26,7 +26,7 @@ function getCookie(name) {
 
 const Home = () => {
 
-
+  // jwt context is setted by getting it from cookie 
   const { jwt, setJwt } = useContext(JwtContext)
    
   console.log(jwt, " : is jwt initailly in home")
@@ -42,9 +42,11 @@ const Home = () => {
       <Nav />
       <PopUpPage />
       <div className='bg-gray-900'>
+        {/* if jwt is null means user is not logged in then movies according to mood component MovieTwo will not be diplayed.*/}
          {
           jwt == null || jwt === "" ? <></>:<MovieTwo/>
          }
+        {/* trending movies component which is visible to all */}
         <Movie />
        
         
