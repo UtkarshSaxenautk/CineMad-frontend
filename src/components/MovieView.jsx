@@ -1,10 +1,13 @@
 import Result from "./Result";
+// here we are using axios to make api call which is npm package 
 import axios from "axios";
 import { useContext } from "react";
 import { useState } from "react";
 import { useEffect } from "react";
+// using SearchContext and TypeContext to get value of searchedKeyword and Type of movie or series
 import { SearchContext, TypeContext } from "../JwtContext";
 
+// react-toast package for notification in app
  import { ToastContainer, toast } from 'react-toastify';
   import 'react-toastify/dist/ReactToastify.css';
 import Preloader from "./Preloader";
@@ -13,8 +16,11 @@ import Preloader from "./Preloader";
 //var SEARCHAPI = "https://api.themoviedb.org/3/search/movie?&api_key=04c35731a5ee918f014970082a0088b1&query=";
 function Movie() {
   const [movies, setMovies] = useState([]);
+ // getting searched context from background using SearchContext
   const { search, setSearch } = useContext(SearchContext)
+ //  getting type context from background using TypeContext
   const { type, setType } = useContext(TypeContext)
+ // different apiUrls according to type of movie and series selected
   const [APIURL, setAPIURL] = useState('https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&certification_country=IN&certification=PG-13&include_adult=false&vote_average.gte=6.0&api_key=04c35731a5ee918f014970082a0088b1&page=1&sort_by=popularity.desc&certification_country=US&certification.lte=PG-13&include_adult=false&vote_average.gte=6.0')
   const [APIURL2, setAPIURL2 ] = useState('https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&certification_country=IN&certification=PG-13&include_adult=false&vote_average.gte=6.0&api_key=04c35731a5ee918f014970082a0088b1&page=2&sort_by=popularity.desc&certification_country=US&certification.lte=PG-13&include_adult=false&vote_average.gte=6.0')
   const [SEARCHAPI , setSEARCHAPI] = useState("https://api.themoviedb.org/3/search/movie?api_key=04c35731a5ee918f014970082a0088b1&query=")
@@ -25,7 +31,7 @@ function Movie() {
 //   }
    
   
-  
+  // here we are using promise to get all movies of keyword
   const getAllMovies = () => {
     Promise.all([axios.get(APIURL), axios.get(APIURL2)])
   .then((responses) => {
@@ -54,6 +60,8 @@ function Movie() {
     //   )
   }
 
+ // get movies according to searched keyword with filters and  getting search from search Context  and setting movies as response from API
+ // axios is used for api call 
   const getSearchedMovies = () => {
     // console.log(SEARCHAPI + search)
     axios.get(
@@ -73,6 +81,10 @@ function Movie() {
       )
   }
 
+ // we are using useEffect with args type and search means, as the searched keyword in context changes or type changes useEffect will re-render component with 
+ // new searched keyword
+
+ // in this we are also using if-else to change the api according to type of movie or series selected?
   useEffect(() => {
     if (search === "") {
       getAllMovies();
