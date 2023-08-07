@@ -273,6 +273,7 @@ function Nav() {
                                          <button onClick={()=> {navigate('/')}} >
                       <img className='pt-4 pb-4 h-28 w-42 align-left' src={Logo} alt="logo" />
                       </button>
+          {/* responsive part of navbar */}
           {window.innerWidth > 600 ? 
             <>
                   <div className='sm: pr-2  !important'>
