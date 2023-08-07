@@ -104,6 +104,7 @@ function Movie() {
     }
   },[type , search])
 
+ // using this useeffect to re-render movies after the chnage in search we get from search-context
   useEffect(
     () => {
       setMovies([]);
@@ -123,6 +124,7 @@ function Movie() {
       <div className="max-w-[1240px] shadow-xl min-h-[200px] mx-auto p-3 ">
       <h2 className="text-center mb-4  pb-5  text-amber-700 font-bold text-4xl">Trending Movies To Watch</h2>   
       {/* <input type="search" value={search} onChange={changeTheSearch} className="w-full border border-black rounded text-slate-700 p-4" /> */}
+       {/* condition jsx checking if movies.length == 0 means no movies then show Preloader else pass value as prop in Result component */}
       {
         movies.length === 0
           ?
